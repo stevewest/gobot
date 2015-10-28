@@ -1,0 +1,5 @@
+{
+	"ImportPath": "github.com/stevewest/ircbot",
+	"GoVersion": "go1.2.1",
+	"Deps": []
+}
