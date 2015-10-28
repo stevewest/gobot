@@ -1,18 +1,40 @@
 // Package config allows loading of application config from a json file.
 package config
 
+import (
+	"fmt"
+	"io"
+	"io/ioutil"
+	"encoding/json"
+)
+
 type Container struct {
-	File string
-	Config map[string]string
+	Config configType
 }
 
-// Get returns the value of the given key, or the default if it does not exist.
-// Acts as a minor shortcut.
-func (config Container) Get (key, def string) string {
+type configType struct {
+	Server ServerType
+	Channels []string
+	Plugins []string
+}
 
-	if val, ok := config.Config[key]; ok {
-		return val
+type ServerType struct {
+	Host string
+	Port int
+}
+
+func (config *Container) Load (reader io.Reader) {
+	file, fileError := ioutil.ReadAll(reader)
+
+	if fileError != nil {
+		fmt.Errorf("File error: %v\n", fileError)
 	}
 
-	return def
+	var loadedJson configType
+	jsonError := json.Unmarshal(file, &loadedJson)
+	if jsonError != nil {
+		fmt.Errorf("JSON error: %v\n", jsonError)
+	}
+
+	config.Config = loadedJson
 }
