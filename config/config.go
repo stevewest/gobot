@@ -9,10 +9,10 @@ import (
 )
 
 type Container struct {
-	Config configType
+	Config ConfigType
 }
 
-type configType struct {
+type ConfigType struct {
 	Server ServerType
 	Channels []string
 	Plugins []string
@@ -30,7 +30,7 @@ func (config *Container) Load (reader io.Reader) {
 		fmt.Errorf("File error: %v\n", fileError)
 	}
 
-	var loadedJson configType
+	var loadedJson ConfigType
 	jsonError := json.Unmarshal(file, &loadedJson)
 	if jsonError != nil {
 		fmt.Errorf("JSON error: %v\n", jsonError)

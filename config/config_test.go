@@ -1,7 +1,7 @@
 package config_test
 
 import (
-	"github.com/stevewest/ircbot/config"
+	"github.com/stevewest/gobot/config"
 	"testing"
 	"strings"
 	"github.com/stretchr/testify/assert"
